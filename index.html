@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>رحلة مصطفى — تعلم وإلعب</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="رحلة تعليمية ممتعة لمصطفى - ٣٠ يوم من التعلم واللعب الهادف استعداداً للروضة والحساب الذهني">
+  <meta name="theme-color" content="#D97706">
+  
+  <!-- Web App Capabilities & PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="رحلة مصطفى">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Google Fonts & Font Awesome Icons (Loaded locally via standard font definitions in style.css, plus icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="app-container">
+    
+    <!-- Top App Header -->
+    <header class="app-header">
+      <div class="header-title">
+        <span>🐪</span>
+        <span>رحلة مصطفى</span>
+      </div>
+      <div class="header-actions">
+        <!-- Streak badge visible at top -->
+        <span id="dash-streak" class="streak-counter">
+          <span>🔥</span> ٠ يوم
+        </span>
+      </div>
+    </header>
+
+    <!-- Main Content Area (Views) -->
+    <main>
+      
+      <!-- 1. Welcome Setup Screen View -->
+      <section class="view-section" id="welcome" data-view="welcome">
+        <div style="text-align: center; margin-top: 20px;">
+          <div class="welcome-logo">👦</div>
+          <h1>مرحباً بك يا بطل!</h1>
+          <p style="margin-top: 10px; padding: 0 20px;">جاهز تبدأ رحلتك التعليمية الممتعة للتحضير للحضانة والحساب الذهني؟</p>
+        </div>
+        
+        <form id="welcome-form" class="welcome-box">
+          <div class="input-group">
+            <label for="welcome-name" class="input-label">اسم البطل:</label>
+            <input type="text" id="welcome-name" class="input-text" placeholder="اكتب اسم الطفل (مثال: مصطفى)" required value="مصطفى">
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">اختار شكلك المفضل (الأفاتار):</label>
+            <div class="emoji-selector">
+              <button type="button" class="emoji-btn selected" data-emoji="👦">👦</button>
+              <button type="button" class="emoji-btn" data-emoji="🦁">🦁</button>
+              <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
+              <button type="button" class="emoji-btn" data-emoji="🦖">🦖</button>
+              <button type="button" class="emoji-btn" data-emoji="🧸">🧸</button>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary" style="margin-top: 10px;">
+            يلا بينا نبدأ! ➔
+          </button>
+        </form>
+      </section>
+
+      <!-- 2. Dashboard View -->
+      <section class="view-section" id="dashboard" data-view="dashboard">
+        <div class="dashboard-grid">
+          
+          <!-- Child greeting widget -->
+          <div class="card hero-card" style="display: flex; align-items: center; justify-content: space-between; gap: 15px;">
+            <div>
+              <h2 style="color: var(--primary);">صباح الخير يا <span id="dash-child-name">مصطفى</span>!</h2>
+              <p style="margin-top: 4px; font-size: 0.95rem;">يلا نلعب ونتعلم سوا النهارده لمدة ١٥ دقيقة بس!</p>
+            </div>
+            <span id="dash-child-emoji" style="font-size: 3.5rem;">👦</span>
+          </div>
+
+          <!-- Circular progress widget -->
+          <div class="card progress-widget">
+            <div class="progress-ring-container">
+              <svg width="120" height="120" id="dash-progress-ring">
+                <circle cx="60" cy="60" r="50" stroke="var(--border-color)" stroke-width="8" fill="transparent"></circle>
+                <circle class="progress-ring-circle" cx="60" cy="60" r="50" stroke="var(--primary)" stroke-width="8" fill="transparent" stroke-linecap="round"></circle>
+              </svg>
+              <div class="progress-ring-text">
+                <span class="progress-val numbers-font">٠</span>
+                <span>/ ٣٠ يوم</span>
+              </div>
+            </div>
+            <div class="progress-details">
+              <h3>رحلة الـ ٣٠ يوم</h3>
+              <p style="font-size: 0.9rem; margin-top: 4px;">يومياً هنتعلم حرف ورقم ولون وحيوان وآية قرآنية.</p>
+              <a href="#/journey" class="btn btn-secondary btn-sm" style="margin-top: 10px; width: 100%;">خريطة الأيام ➔</a>
+            </div>
+          </div>
+
+          <!-- Today's lesson preview -->
+          <div class="card">
+            <h3 style="border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span>🗓️</span> درس اليوم
+            </h3>
+            <div id="dash-today-preview">
+              <!-- Rendered via JS -->
+            </div>
+            <button id="dash-start-btn" class="btn btn-primary" style="width: 100%; margin-top: 16px;">
+              ابدأ درس اليوم ➔
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 3. Journey (Calendar/Map) View -->
+      <section class="view-section" id="journey" data-view="journey">
+        <div style="text-align: center; margin-bottom: 15px;">
+          <h1>خريطة الرحلة</h1>
+          <p>امشي خطوة بخطوة كل يوم عشان تخلص الـ ٣٠ يوم وتتخرج!</p>
+        </div>
+        
+        <!-- Day Nodes Grid -->
+        <div id="calendar-map" class="calendar-map">
+          <!-- Generated via JS -->
+        </div>
+      </section>
+
+      <!-- 4. Active Lesson Screen View -->
+      <section class="view-section" id="lesson" data-view="lesson">
+        <div class="lesson-container">
+          
+          <!-- Active Lesson Header -->
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <button id="lesson-back-btn" class="btn btn-secondary btn-sm btn-round">➔</button>
+            <h2 id="lesson-title" style="font-size: 1.15rem; color: var(--primary);">اليوم ١</h2>
+            <div id="lesson-timer-display" class="phase-timer-display numbers-font">02:00</div>
+          </div>
+
+          <!-- Linear progress bar -->
+          <div class="timer-progress-bar">
+            <div id="lesson-progress-fill" class="timer-progress-fill"></div>
+          </div>
+
+          <!-- Dots representing 5 phases -->
+          <div id="lesson-phase-dots" class="phase-indicator">
+            <!-- Generated via JS -->
+          </div>
+
+          <!-- Active phase card content -->
+          <div id="lesson-phase-card" class="card phase-card">
+            <!-- Generated dynamically via JS -->
+          </div>
+
+          <!-- Action buttons for phases -->
+          <div class="timer-controls">
+            <button id="lesson-prev-phase-btn" class="btn btn-secondary" style="flex: 1;">
+              ➔ السابق
+            </button>
+            <button id="lesson-next-phase-btn" class="btn btn-primary" style="flex: 1.5;">
+              المرحلة التالية ➔
+            </button>
+          </div>
+          
+          <div id="lesson-total-timer-display" style="text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;" class="numbers-font">
+            الوقت الكلي المتبقي: 15:00
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 5. Offline Activities Library View -->
+      <section class="view-section" id="activities" data-view="activities">
+        <div style="margin-bottom: 15px;">
+          <h1>مكتبة الأنشطة المنزلية</h1>
+          <p>٤٠ نشاطاً تربوياً وعملياً بدون شاشات لتقوية المهارات والمرح العائلي.</p>
+        </div>
+
+        <!-- Filter tabs list -->
+        <div id="filter-tabs" class="filter-tabs">
+          <!-- Rendered via JS -->
+        </div>
+
+        <!-- Grid of activities cards -->
+        <div id="activities-grid" class="activities-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <!-- 6. Single Activity Detail View -->
+      <section class="view-section" id="activity-detail" data-view="activity-detail">
+        <div id="activity-detail-content">
+          <!-- Generated dynamically via JS -->
+        </div>
+      </section>
+
+      <!-- 7. Achievements Gallery View -->
+      <section class="view-section" id="achievements" data-view="achievements">
+        <div style="margin-bottom: 15px;">
+          <h1>أوسمة وإنجازات مصطفى</h1>
+          <p>كل درس وخطوة تنجزها تفتح لك وساماً كرتونياً جميلاً كجائزة!</p>
+        </div>
+
+        <!-- Achievements Stats widget -->
+        <div class="achievements-stats">
+          <div class="stat-item">
+            <span id="ach-badge-count" class="stat-val numbers-font">٠ / ١٥</span>
+            <span class="stat-lbl">الأوسمة المحصلة</span>
+          </div>
+          
+          <!-- Mini SVG Progress Ring -->
+          <div class="progress-ring-container" style="width: 70px; height: 70px;">
+            <svg width="70" height="70" id="ach-progress-ring">
+              <circle cx="35" cy="35" r="28" stroke="var(--border-color)" stroke-width="5" fill="transparent"></circle>
+              <circle class="progress-ring-circle" cx="35" cy="35" r="28" stroke="var(--primary)" stroke-width="5" fill="transparent" stroke-linecap="round"></circle>
+            </svg>
+            <div class="progress-ring-text" style="font-size: 0.9rem;">
+              <span class="progress-val numbers-font">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate section (hidden until graduation) -->
+        <div id="ach-graduation-section" style="margin-bottom: 20px; display: none;">
+          <!-- Generated via JS -->
+        </div>
+
+        <!-- Badges Grid layout -->
+        <div id="ach-badges-grid" class="badges-grid">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <!-- 8. Settings View -->
+      <section class="view-section" id="settings" data-view="settings">
+        <div>
+          <h1>الإعدادات والملفات الشخصية</h1>
+          <p style="margin-bottom: 20px;">إدارة حساب البطل، اللغة الصوتية، المظهر، ونسخ البيانات.</p>
+        </div>
+
+        <div class="settings-list">
+          
+          <!-- Profiles list section -->
+          <div class="card">
+            <h3 style="margin-bottom: 10px;">👦 الملفات الشخصية (الحد الأقصى ٢)</h3>
+            <div id="settings-profiles-list" class="profiles-list">
+              <!-- Rendered via JS -->
+            </div>
+            
+            <!-- Create Profile form -->
+            <form id="settings-profile-form" class="welcome-box" style="margin-top: 15px; border-top: 1px dashed var(--border-color); padding-top: 15px;">
+              <div class="input-group">
+                <label for="settings-profile-name" class="input-label" style="font-size: 0.85rem;">إضافة طفل آخر:</label>
+                <input type="text" id="settings-profile-name" class="input-text" style="padding: 10px;" placeholder="اكتب اسم الطفل" required>
+              </div>
+              <div class="input-group">
+                <label style="font-size: 0.85rem;" class="input-label">الأفاتار:</label>
+                <div class="emoji-selector" style="grid-template-columns: repeat(5, 1fr); gap: 6px;">
+                  <button type="button" class="settings-emoji-btn selected" data-emoji="👦" style="font-size: 1.25rem; padding: 6px 0;">👦</button>
+                  <button type="button" class="settings-emoji-btn" data-emoji="👧" style="font-size: 1.25rem; padding: 6px 0;">👧</button>
+                  <button type="button" class="settings-emoji-btn" data-emoji="🦁" style="font-size: 1.25rem; padding: 6px 0;">🦁</button>
+                  <button type="button" class="settings-emoji-btn" data-emoji="🚀" style="font-size: 1.25rem; padding: 6px 0;">🚀</button>
+                  <button type="button" class="settings-emoji-btn" data-emoji="🧸" style="font-size: 1.25rem; padding: 6px 0;">🧸</button>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 5px;">إضافة ملف ➔</button>
+            </form>
+          </div>
+
+          <!-- Preferences toggles -->
+          <div class="card">
+            <h3>⚙️ تفضيلات التطبيق</h3>
+            
+            <!-- TTS toggle -->
+            <div class="setting-row">
+              <div class="setting-label-group">
+                <span class="input-label">المساعد الصوتي (النطق العربي)</span>
+                <p style="font-size: 0.8rem; line-height: 1.3;">نطق الحروف والأرقام والقرآن لمصطفى بصوت عربي.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-speech" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <!-- Theme toggle -->
+            <div class="setting-row">
+              <div class="setting-label-group">
+                <span class="input-label">المظهر الداكن (Dark Mode)</span>
+                <p style="font-size: 0.8rem; line-height: 1.3;">حماية عيني مصطفى عند اللعب ليلاً.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-theme">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+          </div>
+
+          <!-- Backup / Restore -->
+          <div class="card">
+            <h3>💾 إدارة البيانات (الحفظ والاستيراد)</h3>
+            <p style="font-size: 0.8rem; margin: 6px 0 12px 0;">انسخ تقدم طفلك أو انقله لجهاز آخر بسهولة.</p>
+            <div style="display: flex; gap: 10px;">
+              <button id="export-data-btn" class="btn btn-secondary btn-sm" style="flex: 1;">📤 نسخ احتياطي</button>
+              <label class="btn btn-secondary btn-sm" style="flex: 1; margin: 0; cursor: pointer; text-align: center;">
+                📥 استيراد ملف
+                <input type="file" id="import-data-file" accept=".json" style="display: none;">
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar (Persistent) -->
+    <nav class="nav-bottom">
+      <button class="nav-item active" data-target="dashboard">
+        <i class="fa-solid fa-house"></i>
+        <span>الرئيسية</span>
+      </button>
+      <button class="nav-item" data-target="journey">
+        <i class="fa-solid fa-map"></i>
+        <span>الرحلة</span>
+      </button>
+      <button class="nav-item" data-target="activities">
+        <i class="fa-solid fa-cubes"></i>
+        <span>مكتبة الأنشطة</span>
+      </button>
+      <button class="nav-item" data-target="achievements">
+        <i class="fa-solid fa-trophy"></i>
+        <span>الأوسمة</span>
+      </button>
+      <button class="nav-item" data-target="settings">
+        <i class="fa-solid fa-gear"></i>
+        <span>الإعدادات</span>
+      </button>
+    </nav>
+
+    <!-- Unified Modal Overlay -->
+    <div id="modal-overlay" class="modal-overlay">
+      <div id="modal-content" class="modal-content">
+        <!-- Generated Dynamically -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Loading Scripts in Correct Order (Dependencies first) -->
+  <script src="js/storage.js"></script>
+  <script src="js/days.js"></script>
+  <script src="js/activities.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/printable.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Service Worker registration for offline support -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker registered successfully!', reg))
+          .catch(err => console.log('Service Worker registration failed: ', err));
+      });
+    }
+  </script>
+
+</body>
+</html>

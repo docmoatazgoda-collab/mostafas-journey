@@ -1,0 +1,12 @@
+{
+  "name": "mostafa-journey",
+  "version": "1.0.0",
+  "description": "رحلة مصطفى — Arabic RTL educational PWA for Mostafa, age 3",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node \"C:\\Users\\HP\\.gemini\\antigravity-ide\\brain\\76422f5b-eb11-4bd0-bdf0-e0c7eb82ae55\\scratch\\server.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
